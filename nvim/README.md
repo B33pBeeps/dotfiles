@@ -1,0 +1,1 @@
+# 💤 Juan's LazyVim Config
