@@ -20,15 +20,19 @@ size = 13.0
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-style = "Regular"
+style = "ExtraBold"
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
-style = "Bold"
+style = "ExtraBold"
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
-style = "Italic"
+style = "ExtraBold Italic"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "ExtraBold Italic"
 
 [cursor]
 style = { shape = "Beam", blinking = "On" }
