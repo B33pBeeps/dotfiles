@@ -66,7 +66,7 @@ zstyle ':vcs_info:git+set-message:*' hooks git-status
 typeset -gA _prj_ver_cache
 _project_version() {
   local root
-  root=$(git rev-parse --show-toplevel 2>/dev/null) || root=$PWD
+  root=$(git rev-parse --show-toplevel 2>/dev/null) || return
   if [[ -n ${_prj_ver_cache[$root]+x} ]]; then
     echo ${_prj_ver_cache[$root]}
     return

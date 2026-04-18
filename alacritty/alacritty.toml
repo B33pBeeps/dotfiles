@@ -16,7 +16,7 @@ opacity = 0.92
 decorations = "Full"
 
 [font]
-size = 13.0
+size = 11.0
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
