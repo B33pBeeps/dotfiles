@@ -113,6 +113,14 @@ export FZF_DEFAULT_OPTS=" \
   --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
   --preview 'bat --style=numbers --color=always --line-range :500 {}' \
   --preview-window right:50%:wrap"
+
+# Ctrl+R history search — show the command nicely, not a file preview
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {} | bat --color=always --language=bash --style=plain --paging=never'
+  --preview-window 'down:5:wrap:hidden'
+  --bind 'ctrl-/:toggle-preview'
+  --header 'Ctrl+/ to toggle preview'"
+
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 # zoxide
