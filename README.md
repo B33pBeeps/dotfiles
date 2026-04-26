@@ -7,7 +7,7 @@ Cross-platform terminal setup. Catppuccin Macchiato everywhere.
 | Tool | What it does |
 |------|--------------|
 | **zsh** + zinit | Shell + plugin manager |
-| **powerlevel10k** | Prompt theme (with custom project-version segment) |
+| **oh-my-posh** | Prompt theme (Catppuccin Macchiato, custom git + project-version segments) |
 | **fzf-tab, autosuggestions, syntax-highlighting, completions** | zsh plugins |
 | **tmux** | Terminal multiplexer with scratchpad popups, music controls, which-key menu |
 | **alacritty** | GPU-accelerated terminal |
@@ -35,7 +35,7 @@ cd ~/code/personal/dotfiles
 Then:
 
 1. Open a new terminal — zinit downloads plugins (~30s on first run).
-2. p10k configurator launches on first zsh start, or run `p10k configure` later.
+2. Prompt theme is `~/.config/oh-my-posh/zen.toml` — edit and reload.
 3. Inside tmux, press `Ctrl+s I` to install tmux plugins (resurrect, continuum).
 
 ## Platform support

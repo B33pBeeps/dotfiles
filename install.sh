@@ -55,7 +55,7 @@ install_deps() {
   fi
 
   # Core tools via brew (works on all platforms we support)
-  local brew_pkgs=(zsh tmux eza fzf zoxide bat ripgrep fd lazygit btop gh neovim glow jq git)
+  local brew_pkgs=(zsh tmux eza fzf zoxide bat ripgrep fd lazygit btop gh neovim glow jq git oh-my-posh)
   for pkg in "${brew_pkgs[@]}"; do
     if ! brew list --formula "$pkg" >/dev/null 2>&1; then
       info "brew install $pkg"
@@ -96,8 +96,7 @@ install_deps() {
 link_configs() {
   info "Symlinking dotfiles"
   link "zsh/.zshrc"                          "$HOME/.zshrc"
-  link "zsh/.p10k.zsh"                       "$HOME/.p10k.zsh"
-  link "zsh/.p10k-custom.zsh"                "$HOME/.p10k-custom.zsh"
+  link "oh-my-posh/zen.toml"                 "$HOME/.config/oh-my-posh/zen.toml"
   link "tmux/.tmux.conf"                     "$HOME/.tmux.conf"
   link "alacritty/alacritty.toml"            "$HOME/.config/alacritty/alacritty.toml"
   link "alacritty/catppuccin-macchiato.toml" "$HOME/.config/alacritty/catppuccin-macchiato.toml"
@@ -138,7 +137,7 @@ $(printf '\033[1;32m✓ Done!\033[0m')
 Next steps:
   1. Open a new terminal (fresh zsh session).
   2. Zinit downloads plugins on first launch (~30s).
-  3. p10k wizard will start — or run 'p10k configure' later.
+  3. oh-my-posh loads ~/.config/oh-my-posh/zen.toml automatically.
   4. Inside tmux: Ctrl+s I to install tmux plugins.
 
 EOF
