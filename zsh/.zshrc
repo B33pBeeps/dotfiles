@@ -75,6 +75,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias md='mkdir -p'
 alias dualagent='tmux new-session -d "claude --dangerously-skip-permissions" \; split-window -v "codex --yolo" \; select-layout even-vertical \; set-window-option synchronize-panes on \; bind-key -n C-w setw synchronize-panes \; attach'
+alias rt-update='GOPROXY=direct go install github.com/B33pBeeps/redthread/cmd/redthread@main'
 
 # ─── Tool initialization (all optional — skipped if not installed) ───
 # Homebrew — detects Linux, macOS Apple Silicon, macOS Intel
