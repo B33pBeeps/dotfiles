@@ -143,3 +143,7 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # ─── Custom p10k additions ───────────────────────────────────────────
 [[ ! -f ~/.p10k-custom.zsh ]] || source ~/.p10k-custom.zsh
+
+# --- redthread / go ---
+export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
+alias rtdev='( cd "$HOME/code/personal/redthread" && go run ./cmd/redthread )'
