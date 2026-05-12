@@ -90,6 +90,12 @@ install_deps() {
     info "Installing tmux plugin manager"
     git clone --depth=1 https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
   fi
+
+  # Alacritty themes — large theme collection consumed by `theme` picker
+  if [[ ! -d $HOME/.config/alacritty/themes/.git ]]; then
+    info "Cloning alacritty-theme collection"
+    git clone --depth=1 https://github.com/alacritty/alacritty-theme "$HOME/.config/alacritty/themes"
+  fi
 }
 
 # ─── Symlink config files ───────────────────────────────────────────

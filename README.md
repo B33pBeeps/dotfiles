@@ -29,6 +29,7 @@ cd ~/code/personal/dotfiles
 - On Linux: `apt install playerctl` for media controls
 - Install zinit (zsh plugin manager)
 - Install tmux plugin manager (tpm)
+- Clone the alacritty-theme collection (~/.config/alacritty/themes)
 - Symlink every config file from this repo
 - Set zsh as your login shell
 
@@ -71,3 +72,7 @@ Prefix is `Ctrl+s`. Press `Ctrl+s ?` for an in-terminal cheat sheet.
 | `Alt+p / Alt+. / Alt+,` | play-pause / next / previous (browser MPRIS) |
 | `Ctrl+s \|` `Ctrl+s -` | vertical / horizontal split |
 | `Alt+h/j/k/l` | move between panes (no prefix) |
+
+## Theme picker
+
+Run `theme` in any zsh — fzf live-preview through 170+ alacritty themes. Personal `catppuccin-macchiato` is pinned to the top with a ★. ENTER keeps, ESC reverts.
