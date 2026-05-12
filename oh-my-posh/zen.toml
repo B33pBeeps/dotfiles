@@ -33,11 +33,18 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   mantle    = '#1e2030'
   crust     = '#181926'
 
-# ─── Line 1: path  git  project_version ────────────────────────────
+# ─── Line 1: ╭─ path  git  project_version ─────────────────────────
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
   newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    background = 'transparent'
+    foreground = 'p:overlay0'
+    template = '<b>╭─ </b>'
 
   [[blocks.segments]]
     type = 'path'
@@ -86,11 +93,18 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       threshold = 1000
       style = 'austin'
 
-# ─── Line 2: prompt symbol ────────────────────────────────────────
+# ─── Line 2: ╰─❯ prompt symbol ────────────────────────────────────
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
   newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    background = 'transparent'
+    foreground = 'p:overlay0'
+    template = '<b>╰─</b>'
 
   [[blocks.segments]]
     type = 'text'
@@ -105,7 +119,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 [transient_prompt]
   background = 'transparent'
   foreground = 'p:mauve'
-  template = '❯ '
+  template = '<b><p:overlay0>╰─</p:overlay0></b>❯ '
 
 [secondary_prompt]
   background = 'transparent'
