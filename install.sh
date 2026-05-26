@@ -110,6 +110,7 @@ link_configs() {
   link "bat/config"                          "$HOME/.config/bat/config"
   link "lazygit/config.yml"                  "$HOME/.config/lazygit/config.yml"
   link "nvim"                                "$HOME/.config/nvim"
+  link "elio/theme.toml"                     "$HOME/.config/elio/theme.toml"
 }
 
 # ─── Set zsh as login shell ─────────────────────────────────────────
