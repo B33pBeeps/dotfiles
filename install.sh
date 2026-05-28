@@ -110,6 +110,8 @@ link_configs() {
   link "bat/config"                          "$HOME/.config/bat/config"
   link "lazygit/config.yml"                  "$HOME/.config/lazygit/config.yml"
   link "nvim"                                "$HOME/.config/nvim"
+  link "kitty/kitty.conf"                    "$HOME/.config/kitty/kitty.conf"
+  link "foot/foot.ini"                       "$HOME/.config/foot/foot.ini"
   link "elio/theme.toml"                     "$HOME/.config/elio/theme.toml"
 }
 

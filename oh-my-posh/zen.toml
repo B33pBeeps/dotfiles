@@ -69,13 +69,6 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       fetch_status = true
       fetch_stash_count = true
 
-  # Project version — driven by $PROJECT_VERSION which zsh exports per-dir
-  [[blocks.segments]]
-    type = 'text'
-    style = 'plain'
-    background = 'transparent'
-    foreground = 'p:mauve'
-    template = '{{ if .Env.PROJECT_VERSION }} {{ .Env.PROJECT_VERSION }}{{ end }}'
 
 # ─── Right prompt: command duration ────────────────────────────────
 [[blocks]]

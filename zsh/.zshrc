@@ -131,42 +131,6 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
 # ─── oh-my-posh ──────────────────────────────────────────────────────
-# Project version (cached per git-repo) — exported for the omp text segment
-typeset -gA _prj_ver_cache
-_project_version() {
-  local root
-  root=$(git rev-parse --show-toplevel 2>/dev/null) || return
-  if [[ -n ${_prj_ver_cache[$root]+x} ]]; then
-    echo ${_prj_ver_cache[$root]}
-    return
-  fi
-  local ver=""
-  if [[ -f $root/package.json ]]; then
-    ver=$(sed -n 's/^[[:space:]]*"version":[[:space:]]*"\([^"]*\)".*/\1/p' $root/package.json | head -1)
-  elif [[ -f $root/pyproject.toml ]]; then
-    ver=$(sed -n 's/^version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' $root/pyproject.toml | head -1)
-  elif [[ -f $root/Cargo.toml ]]; then
-    ver=$(sed -n 's/^version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' $root/Cargo.toml | head -1)
-  elif [[ -f $root/VERSION ]]; then
-    ver=$(head -1 $root/VERSION)
-  fi
-  if [[ -z $ver ]] && git -C $root rev-parse --verify master >/dev/null 2>&1; then
-    ver=$(git -C $root log master --pretty=%s 2>/dev/null | grep -m1 -E '^[0-9]+\.[0-9]+(\.[0-9]+)?$')
-  fi
-  if [[ -z $ver ]]; then
-    local f
-    f=$(fd -t f -d 4 -E node_modules --glob "package.json" $root 2>/dev/null | head -1)
-    [[ -n $f ]] && ver=$(sed -n 's/^[[:space:]]*"version":[[:space:]]*"\([^"]*\)".*/\1/p' $f | head -1)
-  fi
-  _prj_ver_cache[$root]=$ver
-  echo $ver
-}
-
-# Update PROJECT_VERSION on every prompt (oh-my-posh reads $PROJECT_VERSION)
-_set_project_version() { export PROJECT_VERSION=$(_project_version); }
-autoload -U add-zsh-hook
-add-zsh-hook precmd _set_project_version
-
 # Initialize oh-my-posh
 command -v oh-my-posh >/dev/null && \
   eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/zen.toml)"
