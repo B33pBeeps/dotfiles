@@ -28,8 +28,8 @@ zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*:descriptions' format '%F{#8aadf4}-- %d --%f'
-zstyle ':completion:*:warnings' format '%F{#ed8796}no matches%f'
+zstyle ':completion:*:descriptions' format '%F{#7daea3}-- %d --%f'
+zstyle ':completion:*:warnings' format '%F{#ea6962}no matches%f'
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' complete-options true
 
@@ -68,6 +68,7 @@ alias dualagent='tmux new-session -d "claude --dangerously-skip-permissions" \; 
 alias rt-update='GOPROXY=direct go install github.com/B33pBeeps/redthread/cmd/redthread@main'
 alias slides='$HOME/code/personal/dotfiles/scripts/slides-auto.sh'
 alias theme="$HOME/code/personal/dotfiles/scripts/alacritty-theme.sh"
+alias set-theme="$HOME/code/personal/dotfiles/scripts/set-theme.sh"
 
 # ─── PATH (early, so tool checks below find binaries) ────────────────
 [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
@@ -98,25 +99,16 @@ for conda_path in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/a
   fi
 done
 
-# NVM — load without version detection (saves ~150ms), add default node to PATH
+# NVM
 export NVM_DIR="$HOME/.nvm"
-if [[ -s "$NVM_DIR/nvm.sh" ]]; then
-  # Add default node version to PATH directly so node/npm/codex work everywhere
-  if [[ -f "$NVM_DIR/alias/default" ]]; then
-    _default=$(<"$NVM_DIR/alias/default")
-    _node_dir=$(/bin/ls -d "$NVM_DIR/versions/node/v${_default}"* 2>/dev/null | sort -V | tail -1)
-    [[ -d "$_node_dir/bin" ]] && export PATH="$_node_dir/bin:$PATH"
-    unset _default _node_dir
-  fi
-  # Source nvm without auto-using a version (we already added it to PATH)
-  \. "$NVM_DIR/nvm.sh" --no-use
-fi
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 
 # fzf — Catppuccin Macchiato colors (applies to fzf-tab too)
 export FZF_DEFAULT_OPTS=" \
-  --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
-  --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
-  --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796 \
+  --color=bg+:#32302f,bg:#282828,spinner:#ddc7a1,hl:#ea6962 \
+  --color=fg:#d4be98,header:#ea6962,info:#d3869b,pointer:#ddc7a1 \
+  --color=marker:#ddc7a1,fg+:#d4be98,prompt:#d3869b,hl+:#ea6962 \
   --preview 'bat --style=numbers --color=always --line-range :500 {}' \
   --preview-window right:50%:wrap"
 

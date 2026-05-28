@@ -1,855 +1,855 @@
 # Catppuccin Macchiato theme for Elio.
 
 [palette]
-bg = "#24273a"
-chrome = "#181926"
-chrome_alt = "#1e2030"
-panel = "#181926"
-panel_alt = "#1e2030"
-surface = "#363a4f"
-elevated = "#494d64"
-border = "#5b6078"
-text = "#cad3f5"
-muted = "#a5adcb"
-accent = "#8aadf4"
-accent_soft = "#363a4f"
+bg = "#282828"
+chrome = "#1d2021"
+chrome_alt = "#1d2021"
+panel = "#1d2021"
+panel_alt = "#1d2021"
+surface = "#32302f"
+elevated = "#45403d"
+border = "#5a524c"
+text = "#d4be98"
+muted = "#ddc7a1"
+accent = "#7daea3"
+accent_soft = "#32302f"
 accent_text = "#eff1f5"
-selected_bg = "#494d64"
-selected_border = "#8aadf4"
-selection_bar = "#f5a97f"
-yank_bar = "#a6da95"
-cut_bar = "#ed8796"
+selected_bg = "#45403d"
+selected_border = "#7daea3"
+selection_bar = "#e78a4e"
+yank_bar = "#a9b665"
+cut_bar = "#ea6962"
 grid_selection_band = "#402e16"
 grid_yank_band = "#1e3e1e"
 grid_cut_band = "#421c2a"
-sidebar_active = "#363a4f"
-button_bg = "#24273a"
-button_disabled_bg = "#181926"
-path_bg = "#24273a"
+sidebar_active = "#32302f"
+button_bg = "#282828"
+button_disabled_bg = "#1d2021"
+path_bg = "#282828"
 
 [preview.code]
-fg = "#cad3f5"
-bg = "#181926"
-selection_bg = "#363a4f"
+fg = "#d4be98"
+bg = "#1d2021"
+selection_bg = "#32302f"
 selection_fg = "#eff1f5"
-caret = "#8aadf4"
-line_highlight = "#24273a"
-line_number = "#8087a2"
-comment = "#6e738d"
-string = "#a6da95"
-constant = "#f5a97f"
-keyword = "#c6a0f6"
-function = "#8aadf4"
-type = "#eed49f"
-parameter = "#f5bde6"
-tag = "#91d7e3"
-operator = "#7dc4e4"
-macro = "#ed8796"
-invalid = "#ed8796"
+caret = "#7daea3"
+line_highlight = "#282828"
+line_number = "#928374"
+comment = "#7c6f64"
+string = "#a9b665"
+constant = "#e78a4e"
+keyword = "#d3869b"
+function = "#7daea3"
+type = "#d8a657"
+parameter = "#d3869b"
+tag = "#89b482"
+operator = "#7daea3"
+macro = "#ea6962"
+invalid = "#ea6962"
 
 [classes.directory]
-color = "#8aadf4"
+color = "#7daea3"
 
 [classes.code]
-color = "#7dc4e4"
+color = "#7daea3"
 
 [classes.config]
-color = "#c6a0f6"
+color = "#d3869b"
 
 [classes.document]
-color = "#a6da95"
+color = "#a9b665"
 
 [classes.license]
-color = "#eed49f"
+color = "#d8a657"
 
 [classes.image]
-color = "#8bd5ca"
+color = "#89b482"
 
 [classes.audio]
-color = "#f5a97f"
+color = "#e78a4e"
 
 [classes.video]
-color = "#f5bde6"
+color = "#d3869b"
 
 [classes.archive]
-color = "#ee99a0"
+color = "#ea6962"
 
 [classes.font]
-color = "#b7bdf8"
+color = "#d3869b"
 
 [classes.data]
-color = "#a6da95"
+color = "#a9b665"
 
 [classes.file]
-color = "#b8c0e0"
+color = "#d4be98"
 
 [directories."node_modules"]
 icon = "󰏗"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."tests"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."test"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."__tests__"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."scripts"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."build"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."dist"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories.".next"]
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories.".nuxt"]
 icon = "󱄆"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories.".svelte-kit"]
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories.".astro"]
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."public"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."Public"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."publico"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."Publico"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."público"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."Público"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."pictures"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."Pictures"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."imagenes"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."Imagenes"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."imágenes"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."Imágenes"]
 icon = "󰉏"
-color = "#8bd5ca"
+color = "#89b482"
 
 [directories."documents"]
 icon = "󰲃"
-color = "#a6da95"
+color = "#a9b665"
 
 [directories."Documents"]
 icon = "󰲃"
-color = "#a6da95"
+color = "#a9b665"
 
 [directories."documentos"]
 icon = "󰲃"
-color = "#a6da95"
+color = "#a9b665"
 
 [directories."Documentos"]
 icon = "󰲃"
-color = "#a6da95"
+color = "#a9b665"
 
 [directories."downloads"]
 icon = "󰉍"
-color = "#eed49f"
+color = "#d8a657"
 
 [directories."Downloads"]
 icon = "󰉍"
-color = "#eed49f"
+color = "#d8a657"
 
 [directories."descargas"]
 icon = "󰉍"
-color = "#eed49f"
+color = "#d8a657"
 
 [directories."Descargas"]
 icon = "󰉍"
-color = "#eed49f"
+color = "#d8a657"
 
 [directories."music"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."Music"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."musica"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."Musica"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."música"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."Música"]
 icon = "󱍙"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [directories."videos"]
 icon = "󰕧"
-color = "#f5bde6"
+color = "#d3869b"
 
 [directories."Videos"]
 icon = "󰕧"
-color = "#f5bde6"
+color = "#d3869b"
 
 [directories."vídeos"]
 icon = "󰕧"
-color = "#f5bde6"
+color = "#d3869b"
 
 [directories."Vídeos"]
 icon = "󰕧"
-color = "#f5bde6"
+color = "#d3869b"
 
 [directories."desktop"]
 icon = "󰍹"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [directories."Desktop"]
 icon = "󰍹"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [directories."escritorio"]
 icon = "󰍹"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [directories."Escritorio"]
 icon = "󰍹"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [directories."assets"]
 icon = "󰉏"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."coverage"]
 icon = "󰙨"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."tmp"]
 icon = "󰪺"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."temp"]
 icon = "󰪺"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."out"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."target"]
 icon = "󱧽"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."bin"]
 icon = "󱁿"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."lib"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."vendor"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."src"]
 icon = "󰉋"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."config"]
 icon = "󰒓"
-color = "#8aadf4"
+color = "#7daea3"
 
 [directories."docs"]
 icon = "󱧷"
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.toml]
 class = "config"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.yaml]
 class = "config"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.yml]
 class = "config"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.json]
 class = "config"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.jsonc]
 class = "config"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.json5]
 class = "config"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.desktop]
 class = "config"
 icon = "󰍹"
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.xcf]
 class = "image"
 icon = ""
-color = "#ee99a0"
+color = "#ea6962"
 
 [extensions.pdf]
 class = "document"
 icon = "󰈙"
-color = "#ed8796"
+color = "#ea6962"
 
 [extensions.epub]
 class = "document"
 icon = "󱗖"
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.cbz]
 class = "archive"
 icon = "󱗖"
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.cbr]
 class = "archive"
 icon = "󱗖"
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.ico]
 class = "image"
 icon = "󰋩"
-color = "#91d7e3"
+color = "#89b482"
 
 [extensions.iso]
 class = "archive"
 icon = "󰗮"
-color = "#939ab7"
+color = "#a89984"
 
 [extensions.lock]
 class = "data"
 icon = "󰈡"
-color = "#a6da95"
+color = "#a9b665"
 
 [extensions.rs]
 class = "code"
 icon = ""
-color = "#f5a97f"
+color = "#e78a4e"
 
 [extensions.ts]
 class = "code"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.tsx]
 class = "code"
 icon = "󰜈"
-color = "#7dc4e4"
+color = "#7daea3"
 
 [extensions.js]
 class = "code"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.jsx]
 class = "code"
 icon = "󰜈"
-color = "#f5a97f"
+color = "#e78a4e"
 
 [extensions.py]
 class = "code"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.go]
 class = "code"
 icon = ""
-color = "#7dc4e4"
+color = "#7daea3"
 
 [extensions.sh]
 class = "code"
 icon = ""
-color = "#b8c0e0"
+color = "#d4be98"
 
 [extensions.bash]
 class = "code"
 icon = ""
-color = "#b8c0e0"
+color = "#d4be98"
 
 [extensions.zsh]
 class = "code"
 icon = ""
-color = "#b8c0e0"
+color = "#d4be98"
 
 [extensions.fish]
 class = "code"
 icon = ""
-color = "#b8c0e0"
+color = "#d4be98"
 
 [extensions.c]
 class = "code"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.cpp]
 class = "code"
 icon = ""
-color = "#b7bdf8"
+color = "#d3869b"
 
 [extensions.h]
 class = "code"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.hpp]
 class = "code"
 icon = ""
-color = "#b7bdf8"
+color = "#d3869b"
 
 [extensions.java]
 class = "code"
 icon = ""
-color = "#ed8796"
+color = "#ea6962"
 
 [extensions.lua]
 class = "code"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.php]
 class = "code"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.rb]
 class = "code"
 icon = ""
-color = "#ed8796"
+color = "#ea6962"
 
 [extensions.swift]
 class = "code"
 icon = ""
-color = "#f5a97f"
+color = "#e78a4e"
 
 [extensions.kt]
 class = "code"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.vue]
 class = "code"
 icon = ""
-color = "#a6da95"
+color = "#a9b665"
 
 [extensions.svelte]
 class = "code"
 icon = ""
-color = "#f5a97f"
+color = "#e78a4e"
 
 [extensions.astro]
 class = "code"
 icon = ""
-color = "#b7bdf8"
+color = "#d3869b"
 
 [extensions.html]
 class = "code"
 icon = ""
-color = "#ed8796"
+color = "#ea6962"
 
 [extensions.htm]
 class = "code"
 icon = ""
-color = "#ed8796"
+color = "#ea6962"
 
 [extensions.xml]
 class = "code"
 icon = "󰗀"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.xsd]
 class = "code"
 icon = "󰗀"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.xsl]
 class = "code"
 icon = "󰗀"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.xslt]
 class = "code"
 icon = "󰗀"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [extensions.css]
 class = "code"
 icon = ""
-color = "#91d7e3"
+color = "#89b482"
 
 [extensions.scss]
 class = "code"
 icon = ""
-color = "#f5bde6"
+color = "#d3869b"
 
 [extensions.md]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.markdown]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.mdown]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.mkd]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.mdx]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.txt]
 class = "document"
 icon = ""
-color = "#b8c0e0"
+color = "#d4be98"
 
 [extensions.sql]
 class = "data"
 icon = ""
-color = "#a6da95"
+color = "#a9b665"
 
 [extensions.nix]
 class = "config"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [extensions.dart]
 class = "code"
 icon = ""
-color = "#7dc4e4"
+color = "#7daea3"
 
 [extensions.zig]
 class = "code"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [extensions.log]
 class = "document"
 icon = ""
-color = "#939ab7"
+color = "#a89984"
 
 [extensions.srt]
 class = "document"
 icon = "󰈙"
-color = "#a6da95"
+color = "#a9b665"
 
 [files."Cargo.lock"]
 class = "data"
 icon = "󰈡"
-color = "#a6da95"
+color = "#a9b665"
 
 [files."package.json"]
 class = "config"
 icon = "󰏗"
-color = "#8aadf4"
+color = "#7daea3"
 
 [files."package-lock.json"]
 class = "data"
 icon = "󰈡"
-color = "#a6da95"
+color = "#a9b665"
 
 [files."tsconfig.json"]
 class = "config"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [files."Dockerfile"]
 class = "config"
 icon = "󰡨"
-color = "#7dc4e4"
+color = "#7daea3"
 
 [files."compose.yml"]
 class = "config"
 icon = "󰡨"
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."compose.yaml"]
 class = "config"
 icon = "󰡨"
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."docker-compose.yml"]
 class = "config"
 icon = "󰡨"
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."docker-compose.yaml"]
 class = "config"
 icon = "󰡨"
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."README.md"]
 class = "document"
 icon = ""
-color = "#eed49f"
+color = "#d8a657"
 
 [files."AUTHORS"]
 class = "document"
 icon = "󰭘"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [files."AUTHORS.md"]
 class = "document"
 icon = "󰭘"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [files."AUTHORS.txt"]
 class = "document"
 icon = "󰭘"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [files."CONTRIBUTORS"]
 class = "document"
 icon = "󰭘"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [files."CONTRIBUTORS.md"]
 class = "document"
 icon = "󰭘"
-color = "#b7bdf8"
+color = "#d3869b"
 
 [files.".gitignore"]
 class = "config"
 icon = "󰊢"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files.".env"]
 class = "config"
 icon = "󰒓"
-color = "#a6da95"
+color = "#a9b665"
 
 [files.".npmrc"]
 class = "config"
 icon = ""
-color = "#ed8796"
+color = "#ea6962"
 
 [files.".yarnrc.yml"]
 class = "config"
 icon = ""
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."pnpm-lock.yaml"]
 class = "data"
 icon = "󰈡"
-color = "#f5a97f"
+color = "#e78a4e"
 
 [files."yarn.lock"]
 class = "data"
 icon = "󰈡"
-color = "#8bd5ca"
+color = "#89b482"
 
 [files."bun.lock"]
 class = "data"
 icon = "󰈡"
-color = "#eed49f"
+color = "#d8a657"
 
 [files."bun.lockb"]
 class = "data"
 icon = "󰈡"
-color = "#eed49f"
+color = "#d8a657"
 
 [files."pnpm-workspace.yaml"]
 class = "config"
 icon = ""
-color = "#f5a97f"
+color = "#e78a4e"
 
 [files."biome.json"]
 class = "config"
 icon = "󰏗"
-color = "#7dc4e4"
+color = "#7daea3"
 
 [files."turbo.json"]
 class = "config"
 icon = "󰐷"
-color = "#b8c0e0"
+color = "#d4be98"
 
 [files."deno.json"]
 class = "config"
 icon = ""
-color = "#a6da95"
+color = "#a9b665"
 
 [files."deno.jsonc"]
 class = "config"
 icon = ""
-color = "#a6da95"
+color = "#a9b665"
 
 [files."poetry.lock"]
 class = "data"
 icon = "󰈡"
-color = "#a6da95"
+color = "#a9b665"
 
 [files."requirements.txt"]
 class = "document"
 icon = ""
-color = "#8aadf4"
+color = "#7daea3"
 
 [files."go.mod"]
 class = "config"
 icon = ""
-color = "#7dc4e4"
+color = "#7daea3"
 
 [files."go.sum"]
 class = "data"
 icon = ""
-color = "#a6da95"
+color = "#a9b665"
 
 [files."vite.config.ts"]
 class = "config"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."vite.config.js"]
 class = "config"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."vite.config.mjs"]
 class = "config"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."vite.config.mts"]
 class = "config"
 icon = ""
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."tailwind.config.ts"]
 class = "config"
 icon = "󱏿"
-color = "#91d7e3"
+color = "#89b482"
 
 [files."tailwind.config.js"]
 class = "config"
 icon = "󱏿"
-color = "#91d7e3"
+color = "#89b482"
 
 [files."tailwind.config.mjs"]
 class = "config"
 icon = "󱏿"
-color = "#91d7e3"
+color = "#89b482"
 
 [files."eslint.config.js"]
 class = "config"
 icon = "󰱺"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."eslint.config.mjs"]
 class = "config"
 icon = "󰱺"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."eslint.config.ts"]
 class = "config"
 icon = "󰱺"
-color = "#c6a0f6"
+color = "#d3869b"
 
 [files."prettier.config.js"]
 class = "config"
 icon = ""
-color = "#f5bde6"
+color = "#d3869b"
 
 [files."prettier.config.mjs"]
 class = "config"
 icon = ""
-color = "#f5bde6"
+color = "#d3869b"
 
 [files."prettier.config.ts"]
 class = "config"
 icon = ""
-color = "#f5bde6"
+color = "#d3869b"
 
 [files."postcss.config.js"]
 class = "config"
 icon = ""
-color = "#91d7e3"
+color = "#89b482"
 
 [files."postcss.config.cjs"]
 class = "config"
 icon = ""
-color = "#91d7e3"
+color = "#89b482"
 
 [files."jest.config.js"]
 class = "config"
 icon = "󰙨"
-color = "#eed49f"
+color = "#d8a657"
 
 [files."jest.config.ts"]
 class = "config"
 icon = "󰙨"
-color = "#eed49f"
+color = "#d8a657"
 
 [files."vitest.config.ts"]
 class = "config"
 icon = "󰙨"
-color = "#a6da95"
+color = "#a9b665"
