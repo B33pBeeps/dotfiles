@@ -66,6 +66,7 @@ alias ...='cd ../..'
 alias md='mkdir -p'
 alias dualagent='tmux new-session -d "claude --dangerously-skip-permissions" \; split-window -v "codex --yolo" \; select-layout even-vertical \; set-window-option synchronize-panes on \; bind-key -n C-w setw synchronize-panes \; attach'
 alias rt-update='GOPROXY=direct go install github.com/B33pBeeps/redthread/cmd/redthread@main'
+alias slides='$HOME/code/personal/dotfiles/scripts/slides-auto.sh'
 alias theme="$HOME/code/personal/dotfiles/scripts/alacritty-theme.sh"
 
 # ─── Tool initialization (all optional — skipped if not installed) ───
