@@ -29,7 +29,7 @@ apply_theme() {
   else
     target="\"~/.config/alacritty/themes/themes/${name}.toml\""
   fi
-  sed -i -E "s|\"~/\.config/alacritty/[^\"]+\.toml\"|${target}|" "$CONFIG"
+  sed -i --follow-symlinks -E "s|\"~/\.config/alacritty/[^\"]+\.toml\"|${target}|" "$CONFIG"
 }
 
 preview_theme() {
@@ -42,7 +42,7 @@ preview_theme() {
 }
 
 revert_theme() {
-  sed -i -E "s|\"~/\.config/alacritty/[^\"]+\.toml\"|${ORIGINAL}|" "$CONFIG"
+  sed -i --follow-symlinks -E "s|\"~/\.config/alacritty/[^\"]+\.toml\"|${ORIGINAL}|" "$CONFIG"
 }
 
 export -f apply_theme preview_theme
