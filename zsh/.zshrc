@@ -42,15 +42,13 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
-# ─── Plugins ─────────────────────────────────────────────────────────
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
-zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-syntax-highlighting
-
-# Replay shell completions
-autoload -Uz compinit && compinit
-zinit cdreplay -q
+# ─── Plugins (turbo — load async after prompt appears) ───────────────
+zinit wait lucid light-mode for \
+  zsh-users/zsh-autosuggestions \
+  zsh-users/zsh-completions \
+  Aloxaf/fzf-tab \
+  atload"zicompinit; zicdreplay" \
+  zsh-users/zsh-syntax-highlighting
 
 # ─── Aliases ─────────────────────────────────────────────────────────
 alias ls='eza --icons --group-directories-first'
@@ -78,26 +76,31 @@ done
 # Suppress conda's (env) prefix — oh-my-posh renders its own
 export CONDA_CHANGEPS1=false
 
-# Conda — auto-detect common install locations
-for conda_path in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/anaconda3 /opt/homebrew/anaconda3; do
-  if [[ -x "$conda_path/bin/conda" ]]; then
-    __conda_setup="$("$conda_path/bin/conda" shell.zsh hook 2>/dev/null)"
-    if [[ $? -eq 0 ]]; then
-      eval "$__conda_setup"
-    elif [[ -f "$conda_path/etc/profile.d/conda.sh" ]]; then
-      . "$conda_path/etc/profile.d/conda.sh"
-    else
-      export PATH="$conda_path/bin:$PATH"
+# Conda — lazy-loaded on first use (~107ms saved)
+_lazy_conda() {
+  unfunction conda activate deactivate 2>/dev/null
+  for conda_path in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/anaconda3 /opt/homebrew/anaconda3; do
+    if [[ -x "$conda_path/bin/conda" ]]; then
+      eval "$("$conda_path/bin/conda" shell.zsh hook 2>/dev/null)"
+      break
     fi
-    unset __conda_setup
-    break
-  fi
-done
+  done
+}
+conda()      { _lazy_conda && conda "$@" }
+activate()   { _lazy_conda && conda activate "$@" }
+deactivate() { _lazy_conda && conda deactivate "$@" }
 
-# NVM
+# NVM — lazy-loaded on first use (~168ms saved)
 export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+_lazy_nvm() {
+  unfunction nvm node npm npx 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+}
+nvm()  { _lazy_nvm && nvm "$@" }
+node() { _lazy_nvm && node "$@" }
+npm()  { _lazy_nvm && npm "$@" }
+npx()  { _lazy_nvm && npx "$@" }
 
 # fzf — Catppuccin Macchiato colors (applies to fzf-tab too)
 export FZF_DEFAULT_OPTS=" \
