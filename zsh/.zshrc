@@ -48,8 +48,8 @@ zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-syntax-highlighting
 
-# Replay shell completions
-autoload -Uz compinit && compinit
+# Replay shell completions (-C skips security check, saves ~20ms)
+autoload -Uz compinit && compinit -C
 zinit cdreplay -q
 
 # ─── Aliases ─────────────────────────────────────────────────────────
@@ -98,10 +98,19 @@ for conda_path in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/a
   fi
 done
 
-# NVM
+# NVM — load without version detection (saves ~150ms), add default node to PATH
 export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  # Add default node version to PATH directly so node/npm/codex work everywhere
+  if [[ -f "$NVM_DIR/alias/default" ]]; then
+    _default=$(<"$NVM_DIR/alias/default")
+    _node_dir=$(/bin/ls -d "$NVM_DIR/versions/node/v${_default}"* 2>/dev/null | sort -V | tail -1)
+    [[ -d "$_node_dir/bin" ]] && export PATH="$_node_dir/bin:$PATH"
+    unset _default _node_dir
+  fi
+  # Source nvm without auto-using a version (we already added it to PATH)
+  \. "$NVM_DIR/nvm.sh" --no-use
+fi
 
 # fzf — Catppuccin Macchiato colors (applies to fzf-tab too)
 export FZF_DEFAULT_OPTS=" \
@@ -135,42 +144,6 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
 # ─── oh-my-posh ──────────────────────────────────────────────────────
-# Project version (cached per git-repo) — exported for the omp text segment
-typeset -gA _prj_ver_cache
-_project_version() {
-  local root
-  root=$(git rev-parse --show-toplevel 2>/dev/null) || return
-  if [[ -n ${_prj_ver_cache[$root]+x} ]]; then
-    echo ${_prj_ver_cache[$root]}
-    return
-  fi
-  local ver=""
-  if [[ -f $root/package.json ]]; then
-    ver=$(sed -n 's/^[[:space:]]*"version":[[:space:]]*"\([^"]*\)".*/\1/p' $root/package.json | head -1)
-  elif [[ -f $root/pyproject.toml ]]; then
-    ver=$(sed -n 's/^version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' $root/pyproject.toml | head -1)
-  elif [[ -f $root/Cargo.toml ]]; then
-    ver=$(sed -n 's/^version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' $root/Cargo.toml | head -1)
-  elif [[ -f $root/VERSION ]]; then
-    ver=$(head -1 $root/VERSION)
-  fi
-  if [[ -z $ver ]] && git -C $root rev-parse --verify master >/dev/null 2>&1; then
-    ver=$(git -C $root log master --pretty=%s 2>/dev/null | grep -m1 -E '^[0-9]+\.[0-9]+(\.[0-9]+)?$')
-  fi
-  if [[ -z $ver ]]; then
-    local f
-    f=$(fd -t f -d 4 -E node_modules --glob "package.json" $root 2>/dev/null | head -1)
-    [[ -n $f ]] && ver=$(sed -n 's/^[[:space:]]*"version":[[:space:]]*"\([^"]*\)".*/\1/p' $f | head -1)
-  fi
-  _prj_ver_cache[$root]=$ver
-  echo $ver
-}
-
-# Update PROJECT_VERSION on every prompt (oh-my-posh reads $PROJECT_VERSION)
-_set_project_version() { export PROJECT_VERSION=$(_project_version); }
-autoload -U add-zsh-hook
-add-zsh-hook precmd _set_project_version
-
 # Initialize oh-my-posh
 command -v oh-my-posh >/dev/null && \
   eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/zen.toml)"
