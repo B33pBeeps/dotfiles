@@ -1,7 +1,7 @@
 # dotfiles
 
 Cross-platform terminal setup. Catppuccin Macchiato everywhere.
-
+test
 ## What's inside
 
 | Tool | What it does |
