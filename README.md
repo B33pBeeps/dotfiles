@@ -91,7 +91,7 @@ Inside the palette:
 | Keys | Action |
 |------|--------|
 | `Enter` / `1-9` | Run the command in the original pane |
-| `Ctrl-p` | Paste to the prompt without running (review/edit first) |
+| `Ctrl-y` | Paste to the prompt without running (review/edit first) |
 | `Ctrl-d` | Delete highlighted command |
 | `Ctrl-e` / `Ctrl-g` | Edit session / global list in nvim (reorder, edit by hand) |
 

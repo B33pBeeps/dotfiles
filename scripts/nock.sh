@@ -64,8 +64,13 @@ line_to_cmd() {
 
 # ─── menu: the harpoon popup ─────────────────────────────────────────
 cmd_menu() {
-  local pane_id="$1" session="$2"
   ensure_store
+  # display-popup does NOT expand #{pane_id} in command args, so capture the
+  # originating pane + session from inside the popup (the focused pane is still
+  # the active one — the popup is an overlay, not a real pane).
+  local pane_id session
+  pane_id=$(tmux display-message -p '#{pane_id}')
+  session=$(tmux display-message -p '#{session_name}')
 
   local result key selected cmd
   result=$(
@@ -76,8 +81,9 @@ cmd_menu() {
       --no-preview \
       --pointer "▸" \
       --prompt " " \
-      --header "enter: run · ctrl-p: paste · ctrl-d: delete · ctrl-e/g: edit" \
-      --expect=1,2,3,4,5,6,7,8,9,ctrl-p \
+      --footer "enter: run · ctrl-y: paste · ctrl-d: delete · ctrl-e/g: edit" \
+      --color "footer:8" \
+      --expect=1,2,3,4,5,6,7,8,9,ctrl-y \
       --bind "ctrl-d:execute-silent($SELF delete {})+reload($SELF render '$session')" \
       --bind "ctrl-e:execute(\${EDITOR:-nvim} $(session_file "$session"))+reload($SELF render '$session')" \
       --bind "ctrl-g:execute(\${EDITOR:-nvim} $GLOBAL)+reload($SELF render '$session')"
@@ -98,7 +104,7 @@ cmd_menu() {
 
   [[ -z $cmd ]] && exit 0
 
-  if [[ "$key" == "ctrl-p" ]]; then
+  if [[ "$key" == "ctrl-y" ]]; then
     tmux send-keys -t "$pane_id" "$cmd"          # paste only
   else
     tmux send-keys -t "$pane_id" "$cmd" Enter    # execute
@@ -107,8 +113,8 @@ cmd_menu() {
 
 # ─── add: pin command(s) from history or free-type ───────────────────
 cmd_add() {
-  local session="$1"
   ensure_store
+  local session; session=$(tmux display-message -p '#{session_name}')
 
   local picks query selections
   # History: strip EXTENDED_HISTORY prefix, recent-first, dedup
@@ -117,8 +123,9 @@ cmd_add() {
       | sed 's/^: [0-9]*:[0-9]*;//' \
       | awk '!seen[$0]++' \
       | fzf --multi --print-query --prompt "pin> " \
-            --header "TAB mark multiple · type a new command · enter confirm" \
-            --reverse
+            --footer "tab: mark multiple · type a new command · enter: confirm" \
+            --color "footer:8" \
+            --reverse --no-preview
   ) || exit 0
 
   # First line is the typed query; remaining lines are marked selections.
@@ -136,9 +143,12 @@ cmd_add() {
 
   [[ ${#cmds[@]} -eq 0 ]] && exit 0
 
-  # Scope picker
+  # Scope picker — Tab cycles between session/global
   local scope target
-  scope=$(printf "session: %s\nglobal" "$session" | fzf --prompt "scope> " --reverse --no-sort) || exit 0
+  scope=$(printf "session: %s\nglobal" "$session" | fzf \
+    --prompt "scope> " --reverse --no-sort --no-preview --cycle \
+    --footer "tab: switch scope · enter: confirm" --color "footer:8" \
+    --bind "tab:down,btab:up") || exit 0
   if [[ $scope == global ]]; then
     target="$GLOBAL"
   else
@@ -167,7 +177,10 @@ cmd_delete() {
     [[ -f $f ]] || continue
     if grep -qxF "$cmd" "$f"; then
       tmp=$(mktemp)
-      grep -vxF "$cmd" "$f" > "$tmp" && mv "$tmp" "$f"
+      # `|| true`: grep exits 1 when no lines remain (deleting the last item) —
+      # without this, set -e + && would skip the mv and leave the item.
+      grep -vxF "$cmd" "$f" > "$tmp" || true
+      mv "$tmp" "$f"
       break
     fi
   done
@@ -175,9 +188,9 @@ cmd_delete() {
 
 # ─── dispatch ────────────────────────────────────────────────────────
 case "${1:-}" in
-  menu)   cmd_menu "$2" "$3" ;;
-  add)    cmd_add "$2" ;;
+  menu)   cmd_menu ;;
+  add)    cmd_add ;;
   render) ensure_store; render_list "$2" ;;
-  delete) cmd_delete "$2" "$3" ;;
-  *) echo "usage: $0 menu <pane_id> <session> | add <session> | render <session> | delete <line>" >&2; exit 1 ;;
+  delete) cmd_delete "$2" ;;
+  *) echo "usage: $0 menu | add | render <session> | delete <line>" >&2; exit 1 ;;
 esac
