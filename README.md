@@ -76,3 +76,23 @@ Prefix is `Ctrl+s`. Press `Ctrl+s ?` for an in-terminal cheat sheet.
 ## Theme picker
 
 Run `theme` in any zsh — fzf live-preview through 170+ alacritty themes. Personal `catppuccin-macchiato` is pinned to the top with a ★. ENTER keeps, ESC reverts.
+
+## nock — pinned command palette
+
+"Harpoon for shell commands." Pin frequently-used commands and fire them into the pane you came from, in two scopes: **global** (everywhere) and **session** (per tmux session / project).
+
+| Keys | Action |
+|------|--------|
+| `prefix a` | Open palette — global + session commands, numbered |
+| `prefix A` | Pin command(s) — fzf multi-select over shell history or free-type, then pick scope |
+
+Inside the palette:
+
+| Keys | Action |
+|------|--------|
+| `Enter` / `1-9` | Run the command in the original pane |
+| `Ctrl-p` | Paste to the prompt without running (review/edit first) |
+| `Ctrl-d` | Delete highlighted command |
+| `Ctrl-e` / `Ctrl-g` | Edit session / global list in nvim (reorder, edit by hand) |
+
+Storage: `~/.config/nock/global.list` + `~/.config/nock/sessions/<session>.list` (plain text, one command per line).

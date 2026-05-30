@@ -96,6 +96,9 @@ install_deps() {
     info "Cloning alacritty-theme collection"
     git clone --depth=1 https://github.com/alacritty/alacritty-theme "$HOME/.config/alacritty/themes"
   fi
+
+  # nock — pinned command palette storage
+  mkdir -p "$HOME/.config/nock/sessions"
 }
 
 # ─── Symlink config files ───────────────────────────────────────────
