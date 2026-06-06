@@ -143,3 +143,13 @@ command -v oh-my-posh >/dev/null && \
 # --- redthread / go ---
 export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
 alias rtdev='( cd "$HOME/code/personal/redthread" && go run ./cmd/redthread )'
+
+# --- Android SDK ---
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export JAVA_HOME="/snap/android-studio/current/jbr"
+export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+
+if [ -d "$ANDROID_HOME/ndk" ]; then
+  export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 "$ANDROID_HOME/ndk" | sort -V | tail -1)"
+fi
