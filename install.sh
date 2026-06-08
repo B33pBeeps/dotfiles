@@ -111,6 +111,7 @@ link_configs() {
   link "alacritty/catppuccin-macchiato.toml" "$HOME/.config/alacritty/catppuccin-macchiato.toml"
   link "fzf/.fzf.zsh"                        "$HOME/.fzf.zsh"
   link "bat/config"                          "$HOME/.config/bat/config"
+  link "ripgrep/config"                      "$HOME/.config/ripgrep/config"
   link "lazygit/config.yml"                  "$HOME/.config/lazygit/config.yml"
   link "nvim"                                "$HOME/.config/nvim"
   link "kitty/kitty.conf"                    "$HOME/.config/kitty/kitty.conf"

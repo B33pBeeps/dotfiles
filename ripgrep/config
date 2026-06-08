@@ -1,0 +1,29 @@
+# ripgrep defaults — pointed to by $RIPGREP_CONFIG_PATH (see .zshrc)
+
+# Smart case: case-insensitive unless the pattern has uppercase
+--smart-case
+
+# Search hidden files/dirs (still respects .gitignore)
+--hidden
+
+# Follow symlinks
+--follow
+
+# Always show line numbers
+--line-number
+
+# Never search these
+--glob=!.git/*
+--glob=!node_modules/*
+--glob=!.venv/*
+--glob=!*.min.js
+--glob=!*.lock
+--glob=!*-lock.json
+
+# Nicer wrapping/colors
+--max-columns=180
+--max-columns-preview
+--colors=line:fg:240
+--colors=path:fg:cyan
+--colors=match:fg:red
+--colors=match:style:bold

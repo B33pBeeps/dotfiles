@@ -121,6 +121,9 @@ export FZF_CTRL_R_OPTS="
 
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+# ripgrep — use the tuned config (smart-case, hidden, sane ignores)
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
+
 # zoxide
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
