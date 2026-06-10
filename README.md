@@ -73,7 +73,7 @@ Prefix is `Ctrl+s`. Press `Ctrl+s ?` for an in-terminal cheat sheet.
 | `Ctrl+s /` | live grep → nvim at the matched line |
 | `Ctrl+s n` | glow markdown browser |
 | `Ctrl+s b` | btop |
-| `Ctrl+s e` | redthread (git explorer) |
+| `Ctrl+s e` | redthread (sticky-note pegboard) |
 | `Ctrl+s F` | elio (file manager) |
 | `Ctrl+s q` | Claude/Codex quota |
 | `Ctrl+s S` | songfetch (Spotify) |
