@@ -22,7 +22,8 @@ fi
 # "display \t raw" fields keep selection parsing independent of ANSI codes
 list=$(while IFS= read -r u; do printf '\033[36m%s\033[0m\t%s\n' "$u" "$u"; done <<< "$urls")
 
-out=$(fzf --ansi --reverse --tiebreak=index \
+# --no-preview: the global FZF_DEFAULT_OPTS bat preview makes no sense for URLs
+out=$(fzf --ansi --reverse --tiebreak=index --no-preview \
   --delimiter '\t' --with-nth 1 \
   --prompt 'url> ' --pointer "▸" \
   --footer "enter: open · ctrl-y: copy" --color "footer:8" \
