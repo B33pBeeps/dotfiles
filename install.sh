@@ -92,7 +92,10 @@ install_deps() {
   fi
 
   # Alacritty themes — large theme collection consumed by `theme` picker
-  if [[ ! -d $HOME/.config/alacritty/themes/.git ]]; then
+  if [[ -d $HOME/.config/alacritty/themes/.git ]]; then
+    git -C "$HOME/.config/alacritty/themes" pull --ff-only --quiet \
+      || warn "alacritty-theme pull failed (offline?)"
+  else
     info "Cloning alacritty-theme collection"
     git clone --depth=1 https://github.com/alacritty/alacritty-theme "$HOME/.config/alacritty/themes"
   fi
@@ -120,9 +123,34 @@ link_configs() {
   link "elio/theme.toml"                     "$HOME/.config/elio/theme.toml"
 }
 
+# ─── Symlink user-facing scripts into ~/.local/bin ───────────────────
+# Reachable from popups, scripts, and non-interactive shells — not just
+# via zshrc aliases (see the May-27 lesson in the zsh configs).
+link_bins() {
+  info "Symlinking user-facing scripts to ~/.local/bin"
+  link "scripts/set-theme.sh"        "$HOME/.local/bin/set-theme"
+  link "scripts/alacritty-theme.sh"  "$HOME/.local/bin/alacritty-theme"
+  link "scripts/nock.sh"             "$HOME/.local/bin/nock"
+  link "scripts/doctor.sh"           "$HOME/.local/bin/dotfiles-doctor"
+  link "scripts/tmux-sessionizer.sh" "$HOME/.local/bin/tmux-sessionizer"
+}
+
+# ─── Install tmux plugins non-interactively ─────────────────────────
+install_tmux_plugins() {
+  local tpm_bin="$HOME/.tmux/plugins/tpm/bin/install_plugins"
+  [[ -x $tpm_bin ]] || { warn "tpm not found, skipping plugin install"; return; }
+  info "Installing tmux plugins"
+  "$tpm_bin" >/dev/null 2>&1 && ok "tmux plugins installed" || warn "tpm install_plugins failed"
+}
+
 # ─── Set zsh as login shell ─────────────────────────────────────────
 set_login_shell() {
   local zsh_path
+  # Any zsh counts — don't chsh from /usr/bin/zsh to a brew zsh on every run
+  if [[ "$(basename "${SHELL:-}")" == zsh ]]; then
+    ok "login shell already zsh ($SHELL)"
+    return
+  fi
   zsh_path="$(command -v zsh)" || { warn "zsh not found, skipping chsh"; return; }
 
   # Add to /etc/shells if missing (chsh requires the path to be listed there)
@@ -142,6 +170,8 @@ set_login_shell() {
 # ─── Run ────────────────────────────────────────────────────────────
 install_deps
 link_configs
+link_bins
+install_tmux_plugins   # after link_configs — needs ~/.tmux.conf in place
 set_login_shell
 
 cat <<EOF
@@ -152,6 +182,7 @@ Next steps:
   1. Open a new terminal (fresh zsh session).
   2. Zinit downloads plugins on first launch (~30s).
   3. oh-my-posh loads ~/.config/oh-my-posh/zen.toml automatically.
-  4. Inside tmux: Ctrl+s I to install tmux plugins.
+
+Run 'dotfiles-doctor' any time to verify the setup.
 
 EOF
