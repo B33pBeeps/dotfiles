@@ -25,11 +25,23 @@ result=$(
     --no-preview \
     --pointer "▸" \
     --prompt " " \
-    --expect=1,2,3,4,5,6,7,8,9
+    --print-query \
+    --footer "1-9: jump · ctrl-n: new session named <query>" --color "footer:8" \
+    --expect=1,2,3,4,5,6,7,8,9,ctrl-n
 ) || exit 0
 
-key=$(head -1 <<< "$result")
-selected=$(tail -1 <<< "$result")
+# --print-query layout: line 1 = query, line 2 = key, line 3 = selection (if any)
+query=$(sed -n 1p <<< "$result")
+key=$(sed -n 2p <<< "$result")
+selected=$(sed -n 3p <<< "$result")
+
+if [[ "$key" == "ctrl-n" ]]; then
+  name=$(printf '%s' "$query" | tr ':. ' '___')
+  [[ -z "$name" ]] && exit 0
+  tmux has-session -t "=$name" 2>/dev/null || tmux new-session -ds "$name" -c "$HOME"
+  tmux switch-client -t "=$name"
+  exit 0
+fi
 
 if [[ -n "$key" && "$key" =~ ^[1-9]$ ]]; then
   name=$(tmux list-sessions -F '#S' 2>/dev/null | sed -n "${key}p")
