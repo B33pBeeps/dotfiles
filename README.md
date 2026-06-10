@@ -71,6 +71,8 @@ Prefix is `Ctrl+s`. Press `Ctrl+s ?` for an in-terminal cheat sheet.
 | `Ctrl+s t` | floating terminal |
 | `Ctrl+s f` | fuzzy find file → nvim |
 | `Ctrl+s /` | live grep → nvim at the matched line |
+| `Ctrl+s .` | scrollback **path** picker — fzf every `file:line` in pane history, open in nvim at that line |
+| `Ctrl+s y` | scrollback **URL** picker — Enter opens in browser, `ctrl-y` copies |
 | `Ctrl+s n` | glow markdown browser |
 | `Ctrl+s b` | btop |
 | `Ctrl+s e` | redthread (sticky-note pegboard) |
