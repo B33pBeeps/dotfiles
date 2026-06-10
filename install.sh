@@ -105,6 +105,7 @@ install_deps() {
 link_configs() {
   info "Symlinking dotfiles"
   link "zsh/.zshrc"                          "$HOME/.zshrc"
+  link "zsh/.zshenv"                         "$HOME/.zshenv"
   link "oh-my-posh/zen.toml"                 "$HOME/.config/oh-my-posh/zen.toml"
   link "tmux/.tmux.conf"                     "$HOME/.tmux.conf"
   link "alacritty/alacritty.toml"            "$HOME/.config/alacritty/alacritty.toml"

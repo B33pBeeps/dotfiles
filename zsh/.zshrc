@@ -48,8 +48,17 @@ zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-syntax-highlighting
 
-# Replay shell completions (-C skips security check, saves ~20ms)
-autoload -Uz compinit && compinit -C
+# Completion: full rebuild (with security audit) at most once a day, else the
+# fast -C path (~13ms). compinit doesn't bump the dump mtime itself — touch it.
+autoload -Uz compinit
+() {
+  setopt localoptions extendedglob
+  if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit && touch ~/.zcompdump
+  else
+    compinit -C
+  fi
+}
 zinit cdreplay -q
 
 # ─── Aliases ─────────────────────────────────────────────────────────
@@ -69,40 +78,119 @@ alias rt-update='GOPROXY=direct go install github.com/B33pBeeps/redthread/cmd/re
 alias slides='$HOME/code/personal/dotfiles/scripts/slides-auto.sh'
 alias theme="$HOME/code/personal/dotfiles/scripts/alacritty-theme.sh"
 alias set-theme="$HOME/code/personal/dotfiles/scripts/set-theme.sh"
+alias zbench="hyperfine --warmup 3 --runs 10 'zsh -i -c exit'"
 
-# ─── PATH (early, so tool checks below find binaries) ────────────────
-[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+# PATH note: ~/bin, ~/.local/bin, ~/.cargo/bin and the cached nvm node bin are
+# prepended in ~/.zshenv so they exist for EVERY zsh, not just interactive ones.
 
 # ─── Tool initialization (all optional — skipped if not installed) ───
-# Homebrew — detects Linux, macOS Apple Silicon, macOS Intel
-for brew_path in /home/linuxbrew/.linuxbrew/bin/brew /opt/homebrew/bin/brew /usr/local/bin/brew; do
-  [[ -x $brew_path ]] && eval "$($brew_path shellenv)" && break
-done
+# Homebrew — static for Linuxbrew (mirrors `brew shellenv` output exactly,
+# saves ~17ms/start); eval fallback for the macOS paths.
+if [[ -d /home/linuxbrew/.linuxbrew ]]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+  fpath[1,0]="/home/linuxbrew/.linuxbrew/share/zsh/site-functions"
+  export FPATH
+  path=(/home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $path)
+  [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
+  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}"
+else
+  for brew_path in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    [[ -x $brew_path ]] && eval "$($brew_path shellenv)" && break
+  done
+fi
 
 # Suppress conda's (env) prefix — oh-my-posh renders its own
 export CONDA_CHANGEPS1=false
 
-# Conda — auto-detect common install locations
-for conda_path in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/anaconda3 /opt/homebrew/anaconda3; do
-  if [[ -x "$conda_path/bin/conda" ]]; then
-    __conda_setup="$("$conda_path/bin/conda" shell.zsh hook 2>/dev/null)"
-    if [[ $? -eq 0 ]]; then
-      eval "$__conda_setup"
-    elif [[ -f "$conda_path/etc/profile.d/conda.sh" ]]; then
-      . "$conda_path/etc/profile.d/conda.sh"
-    else
-      export PATH="$conda_path/bin:$PATH"
-    fi
-    unset __conda_setup
-    break
-  fi
-done
+# Conda — pure-shell dispatcher + cached base activation (no python at startup).
+# Same end state as `eval "$(conda shell.zsh hook)"` (~106ms): conda.sh defines
+# the conda() dispatcher (<1ms, handles activate/deactivate), and the base
+# activation is replayed from a cache that invalidates when conda changes.
+# Reset: rm ~/.cache/zsh/conda-base-activate.zsh
+for conda_root in "$HOME/anaconda3" "$HOME/miniconda3" "$HOME/miniforge3" /opt/anaconda3 /opt/homebrew/anaconda3; do
+  [[ -x "$conda_root/bin/conda" ]] || continue
+  . "$conda_root/etc/profile.d/conda.sh"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+  if ! grep -qsE '^[[:space:]]*auto_activate_base:[[:space:]]*false' ~/.condarc; then
+    __conda_cache="$HOME/.cache/zsh/conda-base-activate.zsh"
+    if [[ ! -s $__conda_cache \
+          || "$conda_root/bin/conda" -nt $__conda_cache \
+          || "$conda_root/conda-meta/history" -nt $__conda_cache \
+          || "$conda_root/etc/conda/activate.d" -nt $__conda_cache ]]; then
+      mkdir -p "$HOME/.cache/zsh"
+      __conda_tmp="$(mktemp "$HOME/.cache/zsh/conda-base.XXXXXX")"
+      if env -i HOME="$HOME" CONDA_CHANGEPS1=false PATH=/usr/bin:/bin \
+             "$conda_root/bin/conda" shell.zsh activate base 2>/dev/null \
+           | sed "s|^export PATH=.*|path=(\"$conda_root/bin\" \$path)|" >| "$__conda_tmp" \
+         && grep -q CONDA_PREFIX "$__conda_tmp"; then
+        mv -f "$__conda_tmp" "$__conda_cache"
+      else
+        rm -f "$__conda_tmp"      # never install an empty/garbage cache
+      fi
+      unset __conda_tmp
+    fi
+    if [[ -z $CONDA_SHLVL || $CONDA_SHLVL == 0 ]]; then
+      [[ -s $__conda_cache ]] && . "$__conda_cache"
+    elif [[ $CONDA_DEFAULT_ENV != base ]]; then
+      conda activate base   # nested shell in a non-base env: match old reset-to-base
+    fi
+    unset __conda_cache
+  fi
+  break
+done
+unset conda_root
+
+# NVM — PATH comes from the ~/.zshenv cache; full nvm.sh loads on first `nvm` call.
+__nvm_refresh_cache() {
+  local cache="$HOME/.cache/zsh/nvm-default-bin" v tmp
+  mkdir -p "${cache:h}"
+  if (( $+functions[nvm_version] )); then
+    v="$(nvm_version default)"
+  else
+    v="$(zsh -c ". \"$NVM_DIR/nvm.sh\" --no-use >/dev/null 2>&1; nvm_version default" 2>/dev/null)"
+  fi
+  if [[ -n $v && $v != "N/A" && -d "$NVM_DIR/versions/node/$v/bin" ]]; then
+    tmp="$(mktemp "${cache}.XXXXXX")" \
+      && print -r -- "$NVM_DIR/versions/node/$v/bin" >| "$tmp" \
+      && mv -f "$tmp" "$cache"
+  fi
+}
+
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+  # regenerate cache when the default alias or installed set changed (rare, ~130ms)
+  if [[ ! -s "$HOME/.cache/zsh/nvm-default-bin" \
+        || "$NVM_DIR/alias/default" -nt "$HOME/.cache/zsh/nvm-default-bin" \
+        || "$NVM_DIR/versions/node" -nt "$HOME/.cache/zsh/nvm-default-bin" ]]; then
+    __nvm_refresh_cache
+  fi
+  # Interactive shells always reset to the default node (parity with nvm.sh
+  # auto-use) and keep it ahead of anaconda3/bin from the conda block above.
+  if [[ -r "$HOME/.cache/zsh/nvm-default-bin" ]]; then
+    NVM_BIN="$(<"$HOME/.cache/zsh/nvm-default-bin")"
+    if [[ -d $NVM_BIN ]]; then
+      export NVM_BIN
+      export NVM_INC="${NVM_BIN%/bin}/include/node"
+      path=("$NVM_BIN" ${path:#$NVM_DIR/versions/node/*/bin})
+      typeset -U path
+    fi
+  fi
+  nvm() {
+    unfunction nvm
+    . "$NVM_DIR/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+    nvm "$@"
+    local rc=$?
+    __nvm_refresh_cache       # nvm install/alias/use keep the cache current
+    return $rc
+  }
+fi
+
+# User bins outrank nvm/conda/brew (same precedence as the old config's late
+# PATH block); typeset -U drops the earlier duplicates from ~/.zshenv.
+path=("$HOME/bin"(N) "$HOME/.local/bin"(N) "$HOME/.cargo/bin"(N) $path)
+typeset -U path
 
 # fzf — Catppuccin Macchiato colors (applies to fzf-tab too)
 export FZF_DEFAULT_OPTS=" \
@@ -127,16 +215,11 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
 # zoxide
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-# Cargo
-[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+# Cargo — ~/.cargo/bin is prepended in ~/.zshenv
 
 # Omarchy layout (optional per-user overlay)
 [[ -f "$HOME/code/opensource/terminal-configs/omarchy-shell.sh" ]] && \
   source "$HOME/code/opensource/terminal-configs/omarchy-shell.sh"
-
-# ─── PATH ────────────────────────────────────────────────────────────
-[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
 # ─── oh-my-posh ──────────────────────────────────────────────────────
 # Initialize oh-my-posh
@@ -144,15 +227,17 @@ command -v oh-my-posh >/dev/null && \
   eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/zen.toml)"
 
 # --- redthread / go ---
-export PATH="$HOME/.local/go/bin:$HOME/go/bin:$PATH"
+path=("$HOME/.local/go/bin"(N) "$HOME/go/bin"(N) $path)
 alias rtdev='( cd "$HOME/code/personal/redthread" && go run ./cmd/redthread )'
 
-# --- Android SDK ---
-export ANDROID_HOME="$HOME/Android/Sdk"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export JAVA_HOME="/snap/android-studio/current/jbr"
-export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
-
-if [ -d "$ANDROID_HOME/ndk" ]; then
-  export NDK_HOME="$ANDROID_HOME/ndk/$(ls -1 "$ANDROID_HOME/ndk" | sort -V | tail -1)"
+# --- Android SDK (only if present) ---
+if [[ -d "$HOME/Android/Sdk" ]]; then
+  export ANDROID_HOME="$HOME/Android/Sdk"
+  export ANDROID_SDK_ROOT="$ANDROID_HOME"
+  path=("$ANDROID_HOME/platform-tools"(N) "$ANDROID_HOME/emulator"(N) "$ANDROID_HOME/cmdline-tools/latest/bin"(N) $path)
+  () {
+    local -a ndk=("$ANDROID_HOME"/ndk/*(N/nOn))
+    (( $#ndk )) && export NDK_HOME="$ndk[1]"
+  }
 fi
+[[ -d /snap/android-studio/current/jbr ]] && export JAVA_HOME="/snap/android-studio/current/jbr"
