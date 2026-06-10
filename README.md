@@ -73,7 +73,7 @@ Prefix is `Ctrl+s`. Press `Ctrl+s ?` for an in-terminal cheat sheet.
 | `Ctrl+s /` | live grep → nvim at the matched line |
 | `Ctrl+s .` | scrollback **path** picker — fzf every `file:line` in pane history, open in nvim at that line |
 | `Ctrl+s y` | scrollback **URL** picker — Enter opens in browser, `ctrl-y` copies |
-| `Ctrl+s Y` | scrollback **command** picker — Enter copies (never runs), `ctrl-e` pastes to prompt |
+| `Ctrl+s Y` | scrollback **command** picker — yours + claude/codex output; Enter copies (never runs), `ctrl-e` pastes to prompt |
 | `Ctrl+s n` | glow markdown browser |
 | `Ctrl+s N` | per-project notes — nvim on `~/notes/<session>.md` |
 | `Ctrl+s b` | btop |
