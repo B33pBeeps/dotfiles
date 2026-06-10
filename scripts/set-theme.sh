@@ -147,4 +147,4 @@ fi
 echo ""
 echo "→ Run 'exec zsh' to apply fzf colors in this shell"
 echo "→ Open new terminals for full effect"
-echo "→ nvim: restart to apply colorscheme (or :Lazy reload + :colorscheme ...)"
+echo "→ nvim: re-themes itself on next focus (no restart needed)"

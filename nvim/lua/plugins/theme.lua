@@ -8,6 +8,9 @@ end
 
 local colorscheme = (theme == "gruvbox") and "gruvbox-material" or "catppuccin-macchiato"
 
+-- Tracked by the hot-reload autocmd (see config/autocmds.lua)
+vim.g.dotfiles_theme = theme
+
 return {
   { "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 },
   { "sainnhe/gruvbox-material", lazy = false, priority = 1000 },
