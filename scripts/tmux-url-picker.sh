@@ -35,12 +35,9 @@ url=$(sed -n 2p <<< "$out" | cut -f2)
 [[ -z $url ]] && exit 0
 
 if [[ $key == ctrl-y ]]; then
-  tmux set-buffer -- "$url"
-  if [[ -n ${WAYLAND_DISPLAY:-} ]] && command -v wl-copy >/dev/null; then
-    printf '%s' "$url" | wl-copy
-  elif command -v xclip >/dev/null; then
-    printf '%s' "$url" | xclip -selection clipboard
-  fi
+  # -w forwards to the system clipboard via OSC52 — no wl-copy/xclip process
+  # (wl-copy's forked clipboard server holds the popup tty open and hangs it)
+  tmux set-buffer -w -- "$url"
   tmux display-message "copied: $url"
 else
   opener=$(command -v xdg-open || command -v open) || exit 0

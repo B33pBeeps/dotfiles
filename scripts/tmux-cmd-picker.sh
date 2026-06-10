@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Scrollback command picker — commands from YOUR prompt and from agent/doc
-# output, fzf'd. Enter COPIES (never runs); ctrl-e pastes onto the
-# originating pane's prompt for editing. Runs in a tmux popup.
+# output, fzf'd. Enter copies to the clipboard — nothing else, never runs.
+# Runs in a tmux popup.
 #
 # Sources (color-coded):
 #   green  ╰─❯ prompt lines (commands you ran)
@@ -72,22 +72,14 @@ done <<< "$cmds")
 out=$(fzf --ansi --reverse --tiebreak=index --no-preview \
   --delimiter '\t' --with-nth 1 \
   --prompt 'cmd> ' --pointer "▸" \
-  --footer "enter: copy · ctrl-e: paste to prompt (no run) · green=yours cyan=\$ yellow=claude" --color "footer:8" \
-  --expect=ctrl-e \
+  --footer "enter: copy · green=yours cyan=\$ yellow=claude" --color "footer:8" \
   <<< "$list") || exit 0
 
-key=$(sed -n 1p <<< "$out")
-cmd=$(sed -n 2p <<< "$out" | cut -f2)
+cmd=$(cut -f2 <<< "$out")
 [[ -z $cmd ]] && exit 0
 
-if [[ $key == ctrl-e ]]; then
-  tmux send-keys -t "$pane_id" "$cmd"        # type it, don't run it
-else
-  tmux set-buffer -- "$cmd"
-  if [[ -n ${WAYLAND_DISPLAY:-} ]] && command -v wl-copy >/dev/null; then
-    printf '%s' "$cmd" | wl-copy
-  elif command -v xclip >/dev/null; then
-    printf '%s' "$cmd" | xclip -selection clipboard
-  fi
-  tmux display-message "copied: $cmd"
-fi
+# -w forwards to the system clipboard via OSC52 — no wl-copy/xclip process
+# (wl-copy forks a clipboard-server child that holds the popup tty open
+# and can hang the client; never spawn it from a popup)
+tmux set-buffer -w -- "$cmd"
+tmux display-message "copied: $cmd"
