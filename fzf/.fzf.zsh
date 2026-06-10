@@ -1,7 +1,7 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */home/juan/.fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/home/juan/.fzf/bin"
+if [[ ! "$PATH" == */home/linuxbrew/.linuxbrew/opt/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/linuxbrew/.linuxbrew/opt/fzf/bin"
 fi
 
-eval "$(fzf --zsh)"
+source <(fzf --zsh)

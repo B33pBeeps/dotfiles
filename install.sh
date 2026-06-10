@@ -72,8 +72,10 @@ install_deps() {
     fi
   fi
 
-  # fzf shell integration (generates ~/.fzf.zsh if brew-installed)
-  if [[ -x "$(brew --prefix)/opt/fzf/install" ]]; then
+  # fzf shell integration (generates ~/.fzf.zsh if brew-installed).
+  # Skip when ~/.fzf.zsh exists — it's a repo symlink and the installer
+  # would rewrite the repo file through it.
+  if [[ ! -e $HOME/.fzf.zsh && -x "$(brew --prefix)/opt/fzf/install" ]]; then
     "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish >/dev/null 2>&1 || true
   fi
 
