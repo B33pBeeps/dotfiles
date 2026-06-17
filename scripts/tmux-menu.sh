@@ -58,6 +58,7 @@ find)
 tools)
   show "#[fg=#a9b665,bold] tools" \
     "" \
+    "#[fg=#a9b665]trawl (urls/paths/cmds/plans)" G "display-popup -E -w 80% -h 70% -d \"#{pane_current_path}\" \"zsh -ic 'trawl'\"" \
     "#[fg=#a9b665]lazygit"          g "display-popup -E -S \"fg=#a9b665\" -w 90% -h 85% -d \"#{pane_current_path}\" \"lazygit\"" \
     "#[fg=#a9b665]terminal"         t "display-popup -E -w 60% -h 60% -d \"#{pane_current_path}\" \"zsh -l\"" \
     "#[fg=#a9b665]btop"             b "display-popup -E -S \"fg=#e78a4e\" -w 80% -h 70% \"btop\"" \
