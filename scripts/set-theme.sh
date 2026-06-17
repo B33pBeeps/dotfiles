@@ -80,6 +80,7 @@ FILES=(
   "$DOTFILES/scripts/tmux-quota.sh"
   "$DOTFILES/scripts/tmux-session-picker.sh"
   "$DOTFILES/scripts/tmux-tree-picker.sh"
+  "$DOTFILES/scripts/tmux-menu.sh"
 )
 
 # foot.ini uses raw hex without # — strip pound for those files
